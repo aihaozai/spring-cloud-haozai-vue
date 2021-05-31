@@ -1,5 +1,8 @@
 <template>
-  <div id="c1"></div>
+  <div>
+    <div v-for="(item,index) in fundData" :key="index" :id="item['fundCode']" style="height: 500px;width: 600px;">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -9,46 +12,64 @@ import service from '../config/service';
 export default {
   name: 'index',
   mounted () {
-    axios.get(service.SERVER_FUND + '/fund/fund/getDetailDataChart?fundCode=519674')
+    const __this = this;
+
+    axios.get(service.SERVER_FUND + '/fund/fundReal/getFundRealData')
       .then(res => {
-        const data = res.data.data['data_ACWorthTrend'];
+        const data = res.data.data;
         console.log(data);
-        const chart = new Chart({
-          container: 'c1',
-          autoFit: true,
-          height: 500
-        });
+        for (const obj in data) {
+          __this.fundData.push({'fundCode': data[obj]['fundCode']})
+        }
+        this.$nextTick(function () {
+          for (const obj in data) {
+            const chart = new Chart({
+              container: data[obj]['fundCode'],
+              autoFit: true,
+              height: 500,
+              width: 600,
+              display: 'inline'
+            });
 
-        chart.data(data);
-        chart.scale({
-          0: {
-            nice: true
-          },
-          1: {
-            nice: true
+            chart.data(data[obj]['fundRealList']);
+            chart.scale({
+              'gztime': {
+                nice: true
+              },
+              'gszzl': {
+                nice: true
+              }
+            });
+            // 格式化文字，超过长度添加省略号
+            // chart.axis('gztime', {
+            //   tickLine: null,
+            //   label: {
+            //     autoRotate: false,
+            //     autoHide: false, // 取消自动隐藏label
+            //     formatter (text) {
+            //       // 字符太长添加省略号
+            //       return text.length > 4 ? `${text.slice(0, 1)}` : text;
+            //     }
+            //   }
+            // });
+            chart.tooltip({
+              showCrosshairs: true, // 展示 Tooltip 辅助线
+              shared: true
+            });
+
+            chart.line().position('gztime*gszzl')
+
+            chart.render();
           }
-        });
-        // 格式化文字，超过长度添加省略号
-        chart.axis('0', {
-          tickLine: null,
-          label: {
-            autoRotate: false,
-            autoHide: false, // 取消自动隐藏label
-            formatter (text) {
-              // 字符太长添加省略号
-              return text.length > 4 ? `${text.slice(0, 4)}...` : text;
-            }
-          }
-        });
-        chart.tooltip({
-          showCrosshairs: true, // 展示 Tooltip 辅助线
-          shared: true
-        });
-
-        chart.line().position('0*1')
-
-        chart.render();
+        })
       });
+  },
+  data () {
+    return {
+      fundData: [
+
+      ]
+    }
   }
 }
 
