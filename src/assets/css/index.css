@@ -2,4 +2,25 @@
   height: 500px;
   width: 600px;
   display: inline-block;
+  position: relative;
+}
+
+.block {
+  text-align: center;
+}
+
+/* The ghost, nudged to maintain perfect centering */
+.block:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+.centered {
+  display: inline-block;
+  vertical-align: middle;
+  width: 75%;
+  margin: 20px 0px;
 }

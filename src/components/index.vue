@@ -2,7 +2,7 @@
   <div class="block">
     <div class="centered">
       <div v-for="(item,index) in fundData" :key="index" :id="item['fundCode']" class="fundChart">
-        <span>{{item['fundName']}}（{{item['fundCode']}}）</span>
+        <div style="position: absolute; bottom: 0px; margin: 13px; left: 197px">{{item['fundName']}}（{{item['fundCode']}}）</div>
       </div>
     </div>
   </div>
@@ -74,23 +74,4 @@ export default {
 </script>
 
 <style scoped="scoped">
-
-  .block {
-    text-align: center;
-  }
-
-  /* The ghost, nudged to maintain perfect centering */
-  .block:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -0.25em; /* Adjusts for spacing */
-  }
-
-  .centered {
-    display: inline-block;
-    vertical-align: middle;
-    width: 75%;
-  }
 </style>
