@@ -2,7 +2,7 @@
   <div class="block">
     <div class="centered">
       <div v-for="(item,index) in fundData" :key="index" :id="item['fundCode']" class="fundChart">
-        <div style="position: absolute; bottom: 0px; margin: 13px; left: 197px">{{item['fundName']}}（{{item['fundCode']}}）</div>
+        <div class="fundChartName">{{item['fundName']}}（{{item['fundCode']}}）</div>
       </div>
     </div>
   </div>
@@ -31,7 +31,8 @@ export default {
               autoFit: true,
               height: 500,
               width: 600,
-              padding: [20, 20, 95, 80]
+              padding: [20, 20, 95, 80],
+              theme: 'dark'
             });
 
             chart.data(data[obj]['fundRealList']);
