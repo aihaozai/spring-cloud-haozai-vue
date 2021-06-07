@@ -44,6 +44,18 @@ export default {
                 tickCount: 10
               }
             });
+
+            chart.axis('gztime', {
+              tickLine: null,
+              label: {
+                autoRotate: false,
+                autoHide: false, // 取消自动隐藏label
+                formatter (text) {
+                  // 字符太长添加省略号
+                  return `${text.slice(10, text.length)}`;
+                }
+              }
+            });
             // 配置自定义tooltip
             chart.tooltip({
               showContent: true,
