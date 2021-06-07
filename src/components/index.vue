@@ -1,10 +1,35 @@
 <template>
-  <div class="block">
-    <div class="centered">
-      <div v-for="(item,index) in fundData" :key="index" :id="item['fundCode']" class="fundChart">
-        <div class="fundChartName">{{item['fundName']}}（{{item['fundCode']}}）</div>
-      </div>
-    </div>
+  <div>
+    <a-layout style="min-height: 100vh">
+      <a-layout-sider v-model: collapsed="collapsed" collapsible>
+        <div class="logo" />
+        <a-menu theme="dark" v-model="selectedKeys" mode="inline">
+          <a-sub-menu key="sub1">
+            <template #title>
+            <span>
+              <user-outlined />
+              <span>User</span>
+            </span>
+            </template>
+            <a-menu-item key="3">Tom</a-menu-item>
+            <a-menu-item key="4">Bill</a-menu-item>
+            <a-menu-item key="5">Alex</a-menu-item>
+          </a-sub-menu>
+        </a-menu>
+      </a-layout-sider>
+      <a-layout>
+        <a-layout-header style="background: #fff; padding: 0" />
+        <a-layout-content style="margin: 0 16px">
+          <div class="block">
+            <div class="centered">
+              <div v-for="(item,index) in fundData" :key="index" :id="item['fundCode']" class="fundChart">
+                <div class="fundChartName">{{item['fundName']}}（{{item['fundCode']}}）</div>
+              </div>
+            </div>
+          </div>
+        </a-layout-content>
+      </a-layout>
+    </a-layout>
   </div>
 </template>
 
@@ -12,9 +37,15 @@
 import { Chart } from '@antv/g2';
 import axios from 'axios';
 import service from '../config/service';
-import '@/assets/css/index.css'
+import '@/assets/css/index.css';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 export default {
   name: 'index',
+  components: {
+    UserOutlined,
+    LaptopOutlined,
+    NotificationOutlined
+  },
   mounted () {
     const __this = this;
 
@@ -44,7 +75,6 @@ export default {
                 tickCount: 10
               }
             });
-
             chart.axis('gztime', {
               tickLine: null,
               label: {
@@ -79,7 +109,9 @@ export default {
     return {
       fundData: [
 
-      ]
+      ],
+      collapsed: false,
+      selectedKeys: ['1']
     }
   }
 }
