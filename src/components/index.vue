@@ -11,7 +11,10 @@
               <span>User</span>
             </span>
             </template>
-            <a-menu-item key="3">Tom</a-menu-item>
+            <a-menu-item key="3">
+              <a-icon type="user" />
+              <span class="nav-text">Tom</span>
+            </a-menu-item>
             <a-menu-item key="4">Bill</a-menu-item>
             <a-menu-item key="5">Alex</a-menu-item>
           </a-sub-menu>
@@ -38,14 +41,8 @@ import { Chart } from '@antv/g2';
 import axios from 'axios';
 import service from '../config/service';
 import '@/assets/css/index.css';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 export default {
   name: 'index',
-  components: {
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined
-  },
   mounted () {
     const __this = this;
 
